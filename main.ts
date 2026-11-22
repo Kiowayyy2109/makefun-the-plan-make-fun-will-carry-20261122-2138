@@ -1,16 +1,13 @@
 import { writeFileSync, mkdirSync } from "node:fs";
-import { dirname } from "node:path";
 
 const PLAN =
-  "Day 1: list 3 Fiverr gigs — Python automation, spreadsheet cleanup, web scraping — $75 flat, 24h delivery. Agent builds and delivers alone. Spend $100 promoting listings. Target 6 jobs = $450 by day 30. Edge: instant 24/7 delivery beats freelancers' 3-day turnaround.";
+  "Day 1: $40 domain + email tool. Scrape 2,000 Shopify stores with thin descriptions. Email each a free sample + $49 Stripe link, 10 descriptions in 24h. At 1% reply, 1 in 4 buying: 5 sales = $245/week. No marketplace, no waiting to be picked. Repeat weekly. Day 30: ~$980.";
 
-const len = [...PLAN].length;
-if (len < 1 || len > 280 || PLAN.trim().length === 0) {
-  throw new Error(`Plan must be 1-280 non-blank code points, got ${len}`);
+const codePoints = [...PLAN].length;
+if (codePoints < 1 || codePoints > 280) {
+  throw new Error(`plan must be 1-280 code points, got ${codePoints}`);
 }
 
-const outPath = process.env.MAKEFUN_OUTPUT_DIR
-  ? `${process.env.MAKEFUN_OUTPUT_DIR}/entry.txt`
-  : "/output/entry.txt";
-mkdirSync(dirname(outPath), { recursive: true });
-writeFileSync(outPath, PLAN, "utf8");
+mkdirSync("/output", { recursive: true });
+writeFileSync("/output/entry.txt", PLAN, "utf8");
+console.log(`wrote ${codePoints} code points to /output/entry.txt`);
