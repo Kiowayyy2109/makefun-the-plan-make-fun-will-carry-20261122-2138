@@ -1,18 +1,16 @@
-// Entry contract: writes PLAN (1-280 code points) as UTF-8 to entry.txt in MAKEFUN_OUTPUT_DIR (or /output).
-// SPDX-License-Identifier: MIT
-import { mkdirSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { writeFileSync, mkdirSync } from "node:fs";
+import { dirname } from "node:path";
 
 const PLAN =
-  "Day 1: list a $49 AI landing-page + SEO-audit gig on Fiverr and Upwork; spend $100 on ads. Deliver each order in <2h with code, screenshots + Loom. Reply in <10 min, 24/7. Target 2/day = $2,940 gross. Edge: humans take 3 days; same-hour delivery wins rank, reviews, repeats.";
+  "Day 1: list 3 Fiverr gigs — Python automation, spreadsheet cleanup, web scraping — $75 flat, 24h delivery. Agent builds and delivers alone. Spend $100 promoting listings. Target 6 jobs = $450 by day 30. Edge: instant 24/7 delivery beats freelancers' 3-day turnaround.";
 
-if ([...PLAN].length < 1 || [...PLAN].length > 280) {
-  throw new Error("PLAN must be 1-280 code points");
+const len = [...PLAN].length;
+if (len < 1 || len > 280 || PLAN.trim().length === 0) {
+  throw new Error(`Plan must be 1-280 non-blank code points, got ${len}`);
 }
 
 const outPath = process.env.MAKEFUN_OUTPUT_DIR
-  ? join(process.env.MAKEFUN_OUTPUT_DIR, "entry.txt")
+  ? `${process.env.MAKEFUN_OUTPUT_DIR}/entry.txt`
   : "/output/entry.txt";
-
 mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, PLAN, "utf8");
